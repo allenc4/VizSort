@@ -1,0 +1,16 @@
+Sorting Algorithms... Visualized!
+
+UI Design:
+    - Top nav bar with selections for different sorting algorithms (qs, bubble, merge, etc)
+    - Left side of page:
+        - Description of algorithm, time complexity, etc
+        - Read only text area with algorithm definition
+        - Future: as visualization is running, highlight line of the algorithm being worked on
+    - Right side 
+        - Top of container: 
+            - Input box for # of elements in array to sort
+            - 2 buttons 1 to generate new array and 1 to start the sorting process
+        - Visual of array 
+
+Steps:
+    1) 

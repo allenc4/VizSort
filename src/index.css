@@ -1,13 +1,78 @@
+html {
+  font-size: 14px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #343a40;
+  color: rgb(255,255,255);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Styling for the main navbar */
+.navbar {
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgb(255,255,255);
+}
+
+/* Styling for the rectangle objects */
+.sort-page-container{
+  width: 100%;
+}
+
+.sort-controls {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.sort-controls input,
+.sort-controls button {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.sort-controls input {
+  width: 3em;
+}
+
+
+.rectangle-container {
+  width: 100%;
+}
+
+.rectangle-container .col:first-child {
+  padding-left: 15px;
+  padding-right: 0px;
+}
+
+.rectangle-container .col:not(:first-child) {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.single-rectangle-container {
+  height: 11em;
+  max-width: 2.5em;
+  padding: 0.25em;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.rectangle {
+  width: 100%;
+  background-color: rgb(204, 93, 14);
+}
+
+.rectangle-label-below {
+  width: 100%;
+  padding-top: 0.5em;
+  color: rgb(255,255,255);
 }
