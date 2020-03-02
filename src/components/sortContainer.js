@@ -27,6 +27,12 @@ class SortContainer extends React.Component {
         });
     }
 
+    generateNewArray() {
+        this.setState({
+            size: this.state.size
+        });
+    }
+
     render() {
         const numElements = this.state.size;
 
@@ -48,7 +54,7 @@ class SortContainer extends React.Component {
                                 value={this.state.size}
                                 />
                     </label>
-                    <button>Generate</button>
+                    <button onClick={this.generateNewArray.bind(this)}>Generate</button>
                     <button>Sort</button>
                 </div>
 
