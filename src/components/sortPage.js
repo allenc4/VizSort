@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import SortContainer from './sortContainer';
 
+
 /**
  * Component for the sorting algorithms page. Displays the two page panels;
  * left side is the algorithm definition and right side is the sorting visual
@@ -11,7 +12,7 @@ const SortPage = function(props) {
 
     let sortType = props.location.type;
     const sortAlgos = [
-        "merge", "bubble", "quick"
+        "merge", "bubble", "quick", "insertion"
     ];
 
     // Check if a sort type was included in the properties. If not (or not valid),
@@ -31,7 +32,7 @@ const SortPage = function(props) {
 
             {/* Print out the right side for the algorithm visual */}
             <Col md={9}>
-                <SortContainer size={25}/>
+                <SortContainer sortType={sortType}/>
             </Col>
 
             </Row>

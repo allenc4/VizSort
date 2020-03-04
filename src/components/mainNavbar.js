@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {NavDropdown, NavItem} from 'react-bootstrap';
+import {NavDropdown} from 'react-bootstrap';
 import { Route, Link, Switch, BrowserRouter } from 'react-router-dom';
 import SortPage from './sortPage';
 
@@ -11,7 +11,8 @@ const MainNavbar = function(params) {
     const sortAlgos = [
         {linkText: 'BubbleSort', type: 'bubble'},
         {linkText: 'MergeSort', type: ' merge'},
-        {linkText: 'QuickSort', type: 'quick'}
+        {linkText: 'QuickSort', type: 'quick'},
+        {linkText: 'Insertion', type: 'insertion'}
     ];
 
     let links = sortAlgos.map((algo, i) => {

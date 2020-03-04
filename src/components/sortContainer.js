@@ -1,74 +1,10 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import InsertionSortViz from '../sorting/insertionSortViz';
 
 const DEFAULT_ARR_SIZE = 10;  // default array size  to 10
 
-class SortContainer extends React.Component {
-    
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            size: DEFAULT_ARR_SIZE
-        };
-    }
-
-    onChangeArrSize(e) {
-        let val = e.target.value;
-        // Check to make sure this is a numeric value and between 1 and 99
-        if (val && (isNaN(val) || !(Math.floor(val) == val) || val < 1 || val > 99)) {
-            val = DEFAULT_ARR_SIZE;
-            alert("Please enter a number between 1 and 99");
-        }
-
-        this.setState({
-            size: val
-        });
-    }
-
-    generateNewArray() {
-        this.setState({
-            size: this.state.size
-        });
-    }
-
-    render() {
-        const numElements = this.state.size;
-
-        const rectangleList = [];
-        for (let i = 0; i < numElements; i++) {
-            // Generate random number 1-100
-            const height = Math.floor(Math.random() * (100) + 1);
-            // Add Rectangle element with the random height
-            rectangleList.push(<Col key={i}><Rectangle height={height}/></Col>);
-        }
-
-        return (
-            <div>
-                {/* Print out the input box for the size and two buttons */}
-                <div className="sort-controls">
-                    <label>Array Size: 
-                        <input type="text" 
-                                onChange={this.onChangeArrSize.bind(this)}
-                                value={this.state.size}
-                                />
-                    </label>
-                    <button onClick={this.generateNewArray.bind(this)}>Generate</button>
-                    <button>Sort</button>
-                </div>
-
-                {/* Print out the container for the rectangles */}
-                <Row className="rectangle-container">
-                    {rectangleList}
-                </Row>
-            </div>
-        );
-    }
-}
-
-
-// Initialize the Visual bars
 
 /**
  * Normalizes a number in a given range to a new range
@@ -83,22 +19,185 @@ function normalizeAndConvertEM(num, min, max, minNorm, maxNorm) {
     return ((maxNorm - minNorm)*(num - min))/(max-min) + min;
 }
 
-function Rectangle(props) {
-    const height = props.height;
-    const bDisplaySizeAbove = (height < 5) ? true : false;
-
-    const recStyle = {
-        height: normalizeAndConvertEM(height, 0, 100, 0, 9) + "em"
-    };
-
-    return (
-        <div className="single-rectangle-container">
-            <div> 
-                <div className="rectangle" style={recStyle} />
-                <span className="rectangle-label-below">{height}</span>
+/**
+ * Rectangle component for the data visual
+ */
+class Rectangle extends React.Component {
+    render() {
+        const height = this.props.height;
+        const sorted = this.props.sorted;
+        const current = this.props.current;
+        const current2 = this.props.current2;
+    
+        const recStyle = {
+            height: normalizeAndConvertEM(height, 0, 100, 0, 9) + "em"
+        };
+        let rectangleClass = "rectangle";
+        if (current) {
+            rectangleClass += " sort current";
+        } else if (current2) {
+            rectangleClass += " sort current2";
+        } else if (sorted) {
+            rectangleClass += " sort sorted";
+        }
+    
+        return(
+            <div className="single-rectangle-container">
+                <div> 
+                    <div className={rectangleClass} style={recStyle} />
+                    <span className="rectangle-label-below">{height}</span>
+                </div>
             </div>
-        </div>
-    );
+        );
+        
+    }
+}
+
+
+/**
+ * Component class that holds the container for the sorting visual.
+ * Randomly generates height, builds rectangle components, and handles sorting
+ */
+class SortContainer extends React.Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            elements: [],
+            sortInterval: null
+        };
+    }
+
+    /**
+     * Once the component is initially rendered in the dom, call the generate array method to fill with data
+     */
+    componentDidMount() {
+        this.generateNewArray(DEFAULT_ARR_SIZE);
+    }
+
+    /**
+     * When the array size is changed, regenerate array with random values
+     * @param {*} e 
+     */
+    onChangeArrSize(e) {
+        let val = e.target.value;
+        // Check to make sure this is a numeric value and between 1 and 99
+        if (val && (isNaN(val) || !(Math.floor(val) == val) || val < 1 || val > 99)) {
+            val = DEFAULT_ARR_SIZE;
+            alert("Please enter a number between 1 and 99");
+            return;
+        }
+
+        // Generate a new array
+        this.generateNewArray(val);
+    }
+
+    onGenerateNewArrayClick(e) {
+        this.generateNewArray(this.state.elements.length);
+    }
+
+    generateNewArray(numElements) {
+
+        // If there is a sort in progress, stop it as we are generating a new array
+        if (this.state.sortInterval) {
+            clearInterval(this.state.sortInterval);
+        }
+
+        let elementList = [];
+
+        for (let i = 0; i < numElements; i++) {
+            // Generate random number 1-100
+            const height = Math.floor(Math.random() * (100) + 1);
+            // Add Rectangle element with the random height
+            const element = {
+                height: height,
+                traverse: false
+            };
+            elementList.push(element);
+        }
+
+        this.setState({
+            elements: elementList,
+            sortInterval: null
+        });
+
+    }
+
+    onSortClick() {
+        // Get the rectangle elements and the type of sort requested
+        let elementProps = this.state.elements.slice();
+        const type = this.props.sortType;
+        let sort;
+
+        // Instantiate the correct SortViz based on the type
+        if (type === 'insertion') {
+            sort = new InsertionSortViz(elementProps, "height");
+        }
+
+        if (sort) {
+            // Put the sorting in an interval so we can see the sorting animation update and do not allow it to run
+            // if it is already running
+            if (!this.state.sortInterval) {
+                // Initialize the sort state
+                elementProps = sort.init();
+                let sortInterval = setInterval(() => {
+                    elementProps = sort.sortNext();
+            
+                    if (!sort.hasNext) {
+                        clearInterval(sortInterval);
+                        sortInterval = null;
+                    }
+
+                    this.setState({
+                        elements: elementProps,
+                        sortInterval: sortInterval
+                    });
+
+                }, 1000);
+            
+                this.setState({
+                    elements: elementProps,
+                    sortInterval: sortInterval
+                });
+            }
+        }
+
+
+    }
+
+    render() {
+        const elementList = this.state.elements;
+        let rectangleList = [];
+        // Push each rectangle element into the list of columns
+        // {...props} passes all properties to the Rectangle component (includes height, current, sorted, etc)
+        elementList.map((props, index) => {
+            return rectangleList.push(
+                <Col key={index}>
+                    <Rectangle {...props}/></Col>
+            );
+        });
+
+        return (
+            <div>
+                {/* Print out the input box for the size and two buttons */}
+                <div className="sort-controls">
+                    <label>Array Size: 
+                        <input type="text" 
+                                onChange={this.onChangeArrSize.bind(this)}
+                                value={elementList.length}
+                                />
+                    </label>
+                    <button onClick={this.onGenerateNewArrayClick.bind(this)}>Generate</button>
+                    <button onClick={this.onSortClick.bind(this)}>Sort</button>
+                </div>
+
+                {/* Print out the container for the rectangles */}
+                <Row className="rectangle-container">
+                    {rectangleList}
+                </Row>
+            </div>
+        );
+    }
 }
 
 
