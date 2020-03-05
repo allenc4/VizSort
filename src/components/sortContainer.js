@@ -79,8 +79,9 @@ class SortContainer extends React.Component {
     }
 
     onChangeSlider(e) {
-        console.log(e);
-        console.log(e.target.value);
+        this.setState({
+            animationDelay: e.target.value
+        });
     }
 
     /**
