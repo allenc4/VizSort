@@ -4,6 +4,8 @@ import Col from 'react-bootstrap/Col';
 import InsertionSortViz from '../sorting/insertionSortViz';
 
 const DEFAULT_ARR_SIZE = 10;  // default array size  to 10
+const ANIMATION_DELAY_MIN = 1;  // minimum delay for the sorting animation
+const ANIMATION_DELAY_MAX = 10;  // maximum delay for the animation
 
 
 /**
@@ -64,7 +66,8 @@ class SortContainer extends React.Component {
         super(props);
         this.state = {
             elements: [],
-            sortInterval: null
+            sortInterval: null,
+            animationDelay: 5
         };
     }
 
@@ -73,6 +76,11 @@ class SortContainer extends React.Component {
      */
     componentDidMount() {
         this.generateNewArray(DEFAULT_ARR_SIZE);
+    }
+
+    onChangeSlider(e) {
+        console.log(e);
+        console.log(e.target.value);
     }
 
     /**
@@ -140,6 +148,9 @@ class SortContainer extends React.Component {
             if (!this.state.sortInterval) {
                 // Initialize the sort state
                 elementProps = sort.init();
+
+                // Compute the interval time based on the delay slider value
+                const animationDelay = this.state.animationDelay * 100;
                 let sortInterval = setInterval(() => {
                     elementProps = sort.sortNext();
             
@@ -153,7 +164,7 @@ class SortContainer extends React.Component {
                         sortInterval: sortInterval
                     });
 
-                }, 1000);
+                }, animationDelay);
             
                 this.setState({
                     elements: elementProps,
@@ -179,18 +190,29 @@ class SortContainer extends React.Component {
 
         return (
             <div>
-                {/* Print out the input box for the size and two buttons */}
                 <div className="sort-controls">
-                    <label>Array Size: 
-                        <input type="text" 
-                                onChange={this.onChangeArrSize.bind(this)}
-                                value={elementList.length}
-                                />
-                    </label>
-                    <button onClick={this.onGenerateNewArrayClick.bind(this)}>Generate</button>
-                    <button onClick={this.onSortClick.bind(this)}>Sort</button>
-                </div>
+                    <Row>
+                        {/* Print out the input box for the size and two buttons */}
+                            <label>Array Size: 
+                                <input type="text" 
+                                        onChange={this.onChangeArrSize.bind(this)}
+                                        value={elementList.length}
+                                        />
+                            </label>
+                            <button onClick={this.onGenerateNewArrayClick.bind(this)}>Generate</button>
+                            <button onClick={this.onSortClick.bind(this)}>Sort</button>
 
+                    </Row>
+                    <Row>
+                        <label>
+                            Delay:
+                            <input type="range" min={ANIMATION_DELAY_MIN} max={ANIMATION_DELAY_MAX} 
+                                    onChange={this.onChangeSlider.bind(this)}
+                                    value={this.state.animationDelay}/>
+                        </label>
+                    </Row>
+                </div>
+                
                 {/* Print out the container for the rectangles */}
                 <Row className="rectangle-container">
                     {rectangleList}

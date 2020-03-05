@@ -34,14 +34,19 @@ code {
   margin-top: 25px;
   margin-bottom: 25px;
 }
-
+.sort-controls .row {
+  margin-bottom: 15px;
+}
 .sort-controls input,
 .sort-controls button {
   margin-left: 5px;
   margin-right: 5px;
 }
-.sort-controls input {
+.sort-controls input[type="text"] {
   width: 3em;
+}
+.sort-controls label {
+  margin-bottom: 0;
 }
 
 
