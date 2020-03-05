@@ -4,8 +4,8 @@ import Col from 'react-bootstrap/Col';
 import InsertionSortViz from '../sorting/insertionSortViz';
 
 const DEFAULT_ARR_SIZE = 10;  // default array size  to 10
-const ANIMATION_DELAY_MIN = 1;  // minimum delay for the sorting animation
-const ANIMATION_DELAY_MAX = 10;  // maximum delay for the animation
+const ANIMATION_DELAY_MIN = 0;  // minimum delay for the sorting animation
+const ANIMATION_DELAY_MAX = 25;  // maximum delay for the animation
 
 
 /**
@@ -34,6 +34,8 @@ class Rectangle extends React.Component {
         const recStyle = {
             height: normalizeAndConvertEM(height, 0, 100, 0, 9) + "em"
         };
+
+        // Add classes based on if the current rectangle is current, sorted, etc
         let rectangleClass = "rectangle";
         if (current) {
             rectangleClass += " sort current";
@@ -67,7 +69,7 @@ class SortContainer extends React.Component {
         this.state = {
             elements: [],
             sortInterval: null,
-            animationDelay: 5
+            animationDelay: Math.floor((ANIMATION_DELAY_MAX-ANIMATION_DELAY_MIN)/2)
         };
     }
 
@@ -151,26 +153,33 @@ class SortContainer extends React.Component {
                 elementProps = sort.init();
 
                 // Compute the interval time based on the delay slider value
-                const animationDelay = this.state.animationDelay * 100;
-                let sortInterval = setInterval(() => {
+                var animationDelay = this.state.animationDelay;
+                var sortInterval = setInterval(_runSort.bind(this), animationDelay*25);
+
+                this.setState({
+                    elements: elementProps,
+                    sortInterval: sortInterval
+                });
+
+                function _runSort() {
                     elementProps = sort.sortNext();
             
                     if (!sort.hasNext) {
                         clearInterval(sortInterval);
                         sortInterval = null;
+                    } else if (animationDelay != this.state.animationDelay) {
+                        // Reset the interval to make sure the animation delay speed is up to date if it was changed
+                        clearInterval(sortInterval);
+                        animationDelay = this.state.animationDelay;
+                        sortInterval = setInterval(_runSort.bind(this), animationDelay*25);
                     }
 
                     this.setState({
                         elements: elementProps,
                         sortInterval: sortInterval
                     });
+                }
 
-                }, animationDelay);
-            
-                this.setState({
-                    elements: elementProps,
-                    sortInterval: sortInterval
-                });
             }
         }
 

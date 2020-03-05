@@ -7,6 +7,7 @@ class SortViz {
 
     /**
      * Returns true if there are additional elements to sort, false if it has finished
+     * @returns true | false if there is still additional steps to sort
      */
     get hasNext() {
         return this.bHasNext;
@@ -17,11 +18,19 @@ class SortViz {
      * before sorting starts
      */
     init() {
+        // Clear sorted class for all array elements
+        this.setSorted(0);
+        // Set the current parameters
         this.setCurrent(1);
         this.setCurrent2(0);
         return this.array;
     }
 
+    /**
+     * Runs the next iteration of the sort algorithm. Handles updating internal attributes to hold state of the sort
+     * for the next iteration of the algorithm to run.
+     * @returns array with the modified structure after the current sort iteration finishes
+     */
     sortNext() {
         // Empty method definition. Needs to be defined by child inheriting this class
     }
@@ -80,10 +89,14 @@ class SortViz {
      * @param {int} endIndex 
      */
     setSorted(endIndex) {
-        for (let i = 0; i <= endIndex; i++) {
+        for (let i = 0; i < this.array.length;i++) {
             this.array[i].current = false;
             this.array[i].current2 = false;
-            this.array[i].sorted = true;
+            if (i <= endIndex) {
+                this.array[i].sorted = true;
+            } else {
+                this.array[i].sorted = false;
+            }
         }
     }
 
