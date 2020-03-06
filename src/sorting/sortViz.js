@@ -19,7 +19,7 @@ class SortViz {
      */
     init() {
         // Clear sorted class for all array elements
-        this.setSorted(0);
+        this.setSorted(-1);
         // Set the current parameters
         this.setCurrent(1);
         this.setCurrent2(0);
@@ -97,6 +97,52 @@ class SortViz {
             } else {
                 this.array[i].sorted = false;
             }
+        }
+    }
+
+    /**
+     * Sets the current and current2 properties = false and sorted property = true for index startIndex to array length.
+     * Sort flag in reverse order
+     * @param {*} startIndex 
+     */
+    setSortedReverse(startIndex) {
+        for (let i = 0; i < this.array.length; i++) {
+            if (i < startIndex) {
+                this.array[i].sorted = false;
+            } else {
+                this.array[i].current = false;
+                this.array[i].current2 = false;
+                this.array[i].sorted = true;
+            }
+        }
+    }
+
+    /**
+     * Iterates through array elements and swaps the current and current2 flags
+     */
+    swapCurrents() {
+        let current = -1;
+        let current2 = -1;
+
+        for (let i = 0; i < this.array.length; i++) {
+            if (this.array[i].current) {
+                current = i;
+                if (current2 >= 0) {
+                    break;
+                }
+            } else if (this.array[i].current2) {
+                current2 = i;
+                if (current >= 0) {
+                    break;
+                }
+            }
+        }
+
+        if (current >= 0 && current[2] >= 0) {
+            this.array[current].current = false;
+            this.array[current].current = true;
+            this.array[current2].current2 = false;
+            this.array[current2].current2 = true;
         }
     }
 

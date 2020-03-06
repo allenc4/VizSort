@@ -2,10 +2,11 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import InsertionSortViz from '../sorting/insertionSortViz';
+import BubbleSortViz from '../sorting/bubbleSortViz';
 
 const DEFAULT_ARR_SIZE = 10;  // default array size  to 10
 const ANIMATION_DELAY_MIN = 0;  // minimum delay for the sorting animation
-const ANIMATION_DELAY_MAX = 25;  // maximum delay for the animation
+const ANIMATION_DELAY_MAX = 35;  // maximum delay for the animation
 
 
 /**
@@ -143,6 +144,8 @@ class SortContainer extends React.Component {
         // Instantiate the correct SortViz based on the type
         if (type === 'insertion') {
             sort = new InsertionSortViz(elementProps, "height");
+        } else if (type === 'bubble') {
+            sort = new BubbleSortViz(elementProps, "height");
         }
 
         if (sort) {

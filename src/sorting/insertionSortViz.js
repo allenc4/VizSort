@@ -8,6 +8,7 @@ class InsertionSortViz extends SortViz {
         this.outerIndex = 1;
         this.innerIndex = 0;
         this.kSwapIndex = 1;
+        this.prevSwap = false;
     }
 
     /**
@@ -40,11 +41,10 @@ class InsertionSortViz extends SortViz {
             var cur = this.array[this.kSwapIndex];
             
             // Compare the current element with value at arr[innerIndex]
-            if (this.innerIndex >= 0 && this.compare(cur, this.array[this.innerIndex]) < 0) {
-                // swap elements at index i (kSwapIndex) and index a
-                this.array[this.kSwapIndex] = this.array[this.innerIndex];
-                this.array[this.innerIndex] = cur;
-
+            // We want to show the swap in the animation so if the values need to be swapped, set the prevSwap flag (and switch current/current2 flags)
+            // and on next iteration, we can handle decrementing indecies and handling next cases
+            if (this.prevSwap) {
+                this.prevSwap = false;
                 // Decrement inner index and kswap index
                 this.innerIndex--;
                 this.kSwapIndex--;
@@ -59,12 +59,23 @@ class InsertionSortViz extends SortViz {
                     this.setCurrent(0);
                     this.setCurrent2(-1);
                 }
+            } else if (this.innerIndex >= 0 && this.compare(cur, this.array[this.innerIndex]) < 0) {
+
+                // swap elements at index i (kSwapIndex) and index a
+                this.array[this.kSwapIndex] = this.array[this.innerIndex];
+                this.array[this.innerIndex] = cur;
+
+                this.prevSwap = true;
+
+                // Switch the current and current2 flags
+                this.swapCurrents();
 
             } else {
                 // Element cur is greater than array[innerIndex], which means it is greater than anything before inner index
                 // and less than anything between inner index and outer index
                 this.setSorted(this.outerIndex);
                 this.setCurrent(this.outerIndex+1);
+                this.setCurrent2(this.outerIndex);
 
                 // Increment outer index and reset kSwap and inner indecies 
                 this.outerIndex++;
