@@ -90,6 +90,61 @@ class InsertionSortViz extends SortViz {
         return this.array;
     }
 
+    /**
+     * Performs the full iterative sort of the array using the insertion sort implementation.
+     * This method maintains a history queue and pushes all sort operations (including defining current
+     * element being looked at, comparision element, swaps, etc) and pushes each of those states
+     * onto the queue. Continues this operation until the array is fully sorted, then returns the 
+     * history queue for the visualization to iterate and render in the UI
+     */
+    fullSort() {
+        // Loop through all elements. Once main loop decrements, the largest value will be placed at the end each iteration
+        let arrayHistory = [];
+        // Initialize array and push initial state to queue
+        this.init();
+        arrayHistory.push(this.copyArray());
+
+        for (let i = 1; i < this.array.length; i++) {
+            // Get the current element at position i
+            var cur = this.array[i];
+
+            // Compare current element with previous index to determine if we need to 
+            // start sorting backwards
+            if (this.compare(cur, this.array[i-1]) < 0) {
+                // Traverse backwards until current element is sorted from position 0 to i
+                for (let k=i, a=k-1; a >= 0; a--, k--) {
+                    // Set the current position
+                    this.setCurrent(k);
+                    this.setCurrent2(a);
+                    arrayHistory.push(this.copyArray());
+                    if (this.compare(cur, this.array[a]) < 0) {
+                        // Swat the elements at index i and a
+                        this.array[k] = this.array[a];
+                        this.array[a] = cur;
+
+                        // Reset the current positions after the swap
+                        this.setCurrent(a);
+                        this.setCurrent2(k);
+                        arrayHistory.push(this.copyArray());
+                    } else {
+                        // element cur is greater than arr[a] which means it is greater than anything before index a
+                        break;
+                    }
+                }
+            } else {
+                // set the current position
+                this.setCurrent(i);
+                this.setCurrent2(i-1);
+                arrayHistory.push(this.copyArray());
+            }
+            
+            // We should now be sorted from index 0 to i
+            this.setSorted(i);
+            arrayHistory.push(this.copyArray());
+        }
+
+        return arrayHistory;
+    }
 
 
 }

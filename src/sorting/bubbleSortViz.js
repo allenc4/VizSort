@@ -71,6 +71,46 @@ class BubbleSortViz extends SortViz {
         return this.array;
     }
 
+    /**
+     * Performs the full iterative sort of the array using the bubble sort implementation.
+     * This method maintains a history queue and pushes all sort operations (including defining current
+     * element being looked at, comparision element, swaps, etc) and pushes each of those states
+     * onto the queue. Continues this operation until the array is fully sorted, then returns the 
+     * history queue for the visualization to iterate and render in the UI
+     */
+    fullSort() {
+        // Loop through all elements. Once main loop decrements, the largest value will be placed at the end each iteration
+        let arrayHistory = [];
+        // Initialize the array
+        this.init();
+        arrayHistory.push(this.copyArray());
+
+        for (let eIndex = this.array.length - 1; eIndex >= 0; eIndex--) {
+            for (let i = 1; i <= eIndex; i++) {
+                // Get current and previous element
+                let cur = this.array[i];
+                let prev = this.array[i-1];
+
+                // Set the current and current2 values
+                this.setCurrent(i);
+                this.setCurrent2(i-1);
+                arrayHistory.push(this.copyArray());
+
+                // Compare these two and swap if prev > cur
+                if (this.compare(prev, cur) > 0) {
+                    this.array[i] = prev;
+                    this.array[i-1] = cur;
+                    this.setCurrent(i);
+                    this.setCurrent2(i-1);
+                    arrayHistory.push(this.copyArray());
+                }
+            }
+            this.setSortedReverse(eIndex, true);
+            arrayHistory.push(this.copyArray());
+       }
+
+       return arrayHistory;
+    }
 
 
 }

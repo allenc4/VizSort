@@ -103,17 +103,28 @@ class SortViz {
     /**
      * Sets the current and current2 properties = false and sorted property = true for index startIndex to array length.
      * Sort flag in reverse order
-     * @param {*} startIndex 
+     * @param {int} startIndex 
+     * @param {boolean} clearCurrents clears out the current/current2 flags for all elements
      */
-    setSortedReverse(startIndex) {
+    setSortedReverse(startIndex, clearCurrents) {
         for (let i = 0; i < this.array.length; i++) {
             if (i < startIndex) {
                 this.array[i].sorted = false;
+                if (clearCurrents) {
+                    this.array[i].current = false;
+                    this.array[i].current2 = false;
+                }
             } else {
                 this.array[i].current = false;
                 this.array[i].current2 = false;
                 this.array[i].sorted = true;
             }
+        }
+    }
+
+    setSortedSubset(startIndex, endIndex) {
+        for (let i = startIndex; i <= endIndex; i++) {
+            this.array[i].sorted = true;
         }
     }
 
@@ -144,6 +155,21 @@ class SortViz {
             this.array[current2].current2 = false;
             this.array[current2].current2 = true;
         }
+    }
+
+    /**
+     * Copies the array elements and returns a deep copy of the array
+     */
+    copyArray() {
+        // Cannot just use array.slice() because our array elements are objects which will 
+        // still maintain the main reference, not copied
+        let arr = [];
+        for (let i = 0; i < this.array.length; i++) {
+            // spread operator {... object} will copy the object. This is a shallow copy of the object
+            // but ok for this use since we dont have any nested objects within each array element
+            arr.push({...this.array[i]});
+        }
+        return arr;
     }
 
 }

@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import InsertionSortViz from '../sorting/insertionSortViz';
 import BubbleSortViz from '../sorting/bubbleSortViz';
+import MergeSortViz from '../sorting/mergeSortViz';
 
 const DEFAULT_ARR_SIZE = 10;  // default array size  to 10
 const ANIMATION_DELAY_MIN = 0;  // minimum delay for the sorting animation
@@ -146,6 +147,8 @@ class SortContainer extends React.Component {
             sort = new InsertionSortViz(elementProps, "height");
         } else if (type === 'bubble') {
             sort = new BubbleSortViz(elementProps, "height");
+        } else if (type === 'merge') {
+            sort = new MergeSortViz(elementProps, "height");
         }
 
         if (sort) {
@@ -153,16 +156,42 @@ class SortContainer extends React.Component {
             // if it is already running
             if (!this.state.sortInterval) {
                 // Initialize the sort state
-                elementProps = sort.init();
+                //elementProps = sort.init();
 
                 // Compute the interval time based on the delay slider value
                 var animationDelay = this.state.animationDelay;
-                var sortInterval = setInterval(_runSort.bind(this), animationDelay*25);
+                //var sortInterval = setInterval(_runSort.bind(this), animationDelay*25);
+
+                var elementSortHistory = sort.fullSort();
+                elementProps = elementSortHistory.shift();
+                var sortInterval = setInterval(_displaySortStates.bind(this), animationDelay * 25);
+
 
                 this.setState({
                     elements: elementProps,
                     sortInterval: sortInterval
                 });
+
+                function _displaySortStates() {
+                    elementProps = elementSortHistory.shift();
+                    
+                    if (animationDelay != this.state.animationDelay) {
+                        // Reset the interval to make sure the animation delay speed is up to date if it was changed
+                        clearInterval(sortInterval);
+                        animationDelay = this.state.animationDelay;
+                        sortInterval = setInterval(_displaySortStates.bind(this), animationDelay * 25);
+                    }
+                    // If there are no further elements in the queue, clear the interval
+                    if (elementSortHistory.length == 0) {
+                        clearInterval(sortInterval);
+                        sortInterval = null;
+                    }
+
+                    this.setState({
+                        elements: elementProps,
+                        sortInterval: sortInterval
+                    });
+                }
 
                 function _runSort() {
                     elementProps = sort.sortNext();
