@@ -84,6 +84,21 @@ class SortViz {
     }
 
     /**
+     * Sets the pivot property=true at the specified index of the array.
+     * Sets the property to false for all other indecies
+     * @param {int} curIndex 
+     */
+    setPivot(curIndex) {
+        for (let i = 0; i < this.array.length; i++) {
+            if (i == curIndex) {
+                this.array[i].pivot = true;
+            } else {
+                this.array[i].pivot = false;
+            }
+        }
+    }
+
+    /**
      * Sets the current and current2 properties = false and sorted property = true for index 0 to endIndex
      * of the array elements
      * @param {int} endIndex 

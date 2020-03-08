@@ -80,9 +80,13 @@ code {
 .rectangle.sort.current2 {
   background-color: rgb(255, 230, 0);
 }
+.rectangle.sort.pivot {
+  background-color: rgb(255, 0, 0);
+}
 .rectangle.sort.sorted {
   background-color: rgb(72, 203, 255)
 }
+  
 
 .rectangle-label-below {
   width: 100%;

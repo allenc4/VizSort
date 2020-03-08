@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import InsertionSortViz from '../sorting/insertionSortViz';
 import BubbleSortViz from '../sorting/bubbleSortViz';
 import MergeSortViz from '../sorting/mergeSortViz';
+import QuickSortViz from '../sorting/quickSortViz';
 
 const DEFAULT_ARR_SIZE = 10;  // default array size  to 10
 const ANIMATION_DELAY_MIN = 0;  // minimum delay for the sorting animation
@@ -32,6 +33,7 @@ class Rectangle extends React.Component {
         const sorted = this.props.sorted;
         const current = this.props.current;
         const current2 = this.props.current2;
+        const pivot = this.props.pivot;
     
         const recStyle = {
             height: normalizeAndConvertEM(height, 0, 100, 0, 9) + "em"
@@ -43,6 +45,8 @@ class Rectangle extends React.Component {
             rectangleClass += " sort current";
         } else if (current2) {
             rectangleClass += " sort current2";
+        } else if (pivot) {
+            rectangleClass += " sort pivot";
         } else if (sorted) {
             rectangleClass += " sort sorted";
         }
@@ -149,6 +153,8 @@ class SortContainer extends React.Component {
             sort = new BubbleSortViz(elementProps, "height");
         } else if (type === 'merge') {
             sort = new MergeSortViz(elementProps, "height");
+        } else if (type === 'quick') {
+            sort = new QuickSortViz(elementProps, "height");
         }
 
         if (sort) {
