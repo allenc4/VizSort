@@ -60,7 +60,7 @@ class SortViz {
      */
     setCurrent(curIndex) {
         for (let i = 0; i < this.array.length; i++) {
-            if (i == curIndex) {
+            if (i === curIndex) {
                 this.array[i].current = true;
             } else {
                 this.array[i].current = false;
@@ -75,7 +75,7 @@ class SortViz {
      */
     setCurrent2(curIndex) {
         for (let i = 0; i < this.array.length; i++) {
-            if (i == curIndex) {
+            if (i === curIndex) {
                 this.array[i].current2 = true;
             } else {
                 this.array[i].current2 = false;
@@ -90,7 +90,7 @@ class SortViz {
      */
     setPivot(curIndex) {
         for (let i = 0; i < this.array.length; i++) {
-            if (i == curIndex) {
+            if (i === curIndex) {
                 this.array[i].pivot = true;
             } else {
                 this.array[i].pivot = false;

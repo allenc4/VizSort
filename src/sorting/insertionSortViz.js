@@ -11,6 +11,30 @@ class InsertionSortViz extends SortViz {
         this.prevSwap = false;
     }
 
+    printAlgorithm() {
+        return ( 
+            "for (let i = 1; i < arr.length; i++) {" +
+            "   // Get the current element at position i" +
+            "   var cur = arr[i];" +
+            "   " +
+            "   if (cur < arr[i-1]) {" +
+            "       // Traverse backwards until current element is "+
+            "       // sorted from position 0 to i" +
+            "       for (let k=i,a=k-1; a >= 0; a--,k--) {" +
+            "           if (cur < arr[a]) {" +
+            "               // swap the elements at index i and a" +
+            "               arr[k] = arr[a];" +
+            "               arr[a] = cur;" +
+            "           } else {" +
+            "               // element cur is greater than arr[a] which means it is" +
+            "               // greater than anything before index a" +
+            "               break;" +
+            "               " +
+            "           }" +
+            "       }" +
+            "}"); 
+    }
+
     /**
      * Traverses the next step in the sort. Updates array element properties such as the current traversal,
      * position of elements, etc and returns the updated array.
@@ -89,8 +113,7 @@ class InsertionSortViz extends SortViz {
 
         return this.array;
     }
-
-    /**
+/**
      * Performs the full iterative sort of the array using the insertion sort implementation.
      * This method maintains a history queue and pushes all sort operations (including defining current
      * element being looked at, comparision element, swaps, etc) and pushes each of those states

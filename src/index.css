@@ -30,6 +30,19 @@ code {
   margin-left:0;
 }
 
+.sort-page-container .sort-name{
+  font-size: 3em;
+  text-transform: uppercase;
+  text-decoration-style: double;
+  margin-bottom:25px; 
+}
+
+.sort-page-container .sort-definition {
+  width: 95%;
+  background-color: transparent;
+  color: rgb(255,255,255);
+}
+
 .sort-controls {
   margin-top: 25px;
   margin-bottom: 25px;

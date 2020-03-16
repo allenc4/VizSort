@@ -4,16 +4,18 @@ import Navbar from 'react-bootstrap/Navbar';
 import {NavDropdown} from 'react-bootstrap';
 import { Route, Link, Switch, BrowserRouter } from 'react-router-dom';
 import SortPage from './sortPage';
+import SortConstants from '../sorting/sortConstants';
 
 const MainNavbar = function(params) {
 
     // Sort algorithms
-    const sortAlgos = [
-        {linkText: 'BubbleSort', type: 'bubble'},
-        {linkText: 'MergeSort', type: ' merge'},
-        {linkText: 'QuickSort', type: 'quick'},
-        {linkText: 'Insertion', type: 'insertion'}
-    ];
+    let sortAlgos = [];
+    for (let [key,value] of Object.entries(SortConstants.ALGORITHM_NAMES)) {
+        sortAlgos.push({
+            linkText: value,
+            type: key
+        });
+    }
 
     let links = sortAlgos.map((algo, i) => {
         return (

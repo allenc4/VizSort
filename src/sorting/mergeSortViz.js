@@ -7,6 +7,22 @@ class MergeSortViz extends SortViz {
         this.arrayHistory = [];
     }
 
+    printAlgorithm() {
+        return ( 
+            "mergesort(left, right) {" +
+            "   // If right > left, find middle point to divide array into two halves" +
+            "   if (right > left) {" +
+            "       let middle = Math.floor((left + right) / 2);" +
+            "       // Call mergesort for the first half" +
+            "       mergesort(left, middle);" +
+            "       // Call mergesort for second half" +
+            "       mergesort(middle+1, right);" +
+            "       // Merge the two halves" +
+            "       merge(left, middle, right);" +
+            "   }" +
+            "}"); 
+    }
+
     /**
      * To be called after initializing the object. Sets and returns the array with the current flags for the elements
      * before sorting starts
@@ -78,7 +94,7 @@ class MergeSortViz extends SortViz {
         // Need to mere these two arrays together so [left, right] is sorted
         
         // Only one element so return
-        if (left == right) {
+        if (left === right) {
             return;
         }
 
@@ -90,11 +106,11 @@ class MergeSortViz extends SortViz {
         // Traverse both arrays and in each iteration, add smaller of both elements to tArr
         while (i <= mid && j <= right) {
             if (this.compare(this.array[i], this.array[j]) <= 0) {
-                tArr.push({... this.array[i]});
+                tArr.push({...this.array[i]});
                 this.setCurrent(i);
                 i++;
             } else {
-                tArr.push({... this.array[j]});
+                tArr.push({...this.array[j]});
                 this.setCurrent(j);
                 j++;
             }
@@ -103,11 +119,11 @@ class MergeSortViz extends SortViz {
 
         // Add any elements left in the left subarray
         while (i <= mid) {
-            tArr.push({... this.array[i++]});
+            tArr.push({...this.array[i++]});
         }
         // Add any elements left in the right subarray
         while (j <= right) {
-            tArr.push({... this.array[j++]});
+            tArr.push({...this.array[j++]});
         }
 
         // Copy temp array back to main array

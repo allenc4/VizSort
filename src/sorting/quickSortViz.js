@@ -7,6 +7,22 @@ class QuickSortViz extends SortViz {
         this.arrayHistory = [];
     }
 
+    printAlgorithm() {
+        return ( 
+            "quicksort(low, high) {" +
+            "   if (low < high) {" +
+            "       // pi is partitioning index, arr[pi] is now at the right place" +
+            "       const pi = partition(low, high);" +
+            "       array[pi].sorted = true;" +
+            "       " +
+            "       // Sort before pi" +
+            "       this.quicksort(low, pi-1);" +
+            "       // Sort after pi" +
+            "       this.quicksort(pi+1, high);" +
+            "   }" +
+            "}");
+    }
+
     /**
      * To be called after initializing the object. Sets and returns the array with the current flags for the elements
      * before sorting starts
@@ -82,7 +98,7 @@ class QuickSortViz extends SortViz {
     partition(low, high) {
         // set the pivot point to the high point of the subset
         const pivotIndex = high;
-        const pivot = {... this.array[pivotIndex]};
+        const pivot = {...this.array[pivotIndex]};
         this.setPivot(pivotIndex);
         this.arrayHistory.push(this.copyArray());
 
@@ -100,7 +116,7 @@ class QuickSortViz extends SortViz {
                 // Continue decrementing rightIndex until we find an element <= pivot point
                 if (this.compare(this.array[rightIndex], pivot) <= 0) {
                     // Swap elements at left and right index
-                    const tElement = {... this.array[leftIndex]};
+                    const tElement = {...this.array[leftIndex]};
                     this.array[leftIndex] = this.array[rightIndex];
                     this.array[rightIndex] = tElement;
 

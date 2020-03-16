@@ -9,6 +9,25 @@ class BubbleSortViz extends SortViz {
         this.innerIndex = 1;
     }
 
+    printAlgorithm() {
+        return ( 
+            "// Loop through all elements. Once mainn loop decrements, the largest value" +
+            "// will be placed at the end each iteration" +
+            "for (eIndex = array.length - 1; eIndex >= 0; eIndex--) {" +
+            "   for (i = 1; i < eIndex; i++) {" +
+            "       // Get current and previous element" +
+            "       let cur = array[i];" +
+            "       let prev = array[i-1];" +
+            "       " +
+            "       // Compare these two and swap if prev is > cur" +
+            "       if (prev > cur) {" + 
+            "           array[i] = prev;" + 
+            "           array[i-1] = cur;" +
+            "       }" +
+            "   }" +
+            "}");
+    }
+
     /**
      * Traverses the next step in the sort. Updates array element properties such as the current traversal,
      * position of elements, etc and returns the updated array.
@@ -34,12 +53,10 @@ class BubbleSortViz extends SortViz {
         // Get the current and previous elements
         let cur = this.array[this.innerIndex];
         let prev = this.array[this.innerIndex - 1];
-        let isSwap = false;
 
         // Compare these two and swap if prev is > cur. If we need to swap, perform the swap and switch the current and current2 values
         // then on the next iteration, we continue with the loop since we want to visually show the swap
         if (this.compare(prev, cur) > 0) {
-            isSwap = true;
             this.array[this.innerIndex] = prev;
             this.array[this.innerIndex - 1] = cur;
 
