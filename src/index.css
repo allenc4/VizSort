@@ -31,16 +31,20 @@ code {
 }
 
 .sort-page-container .sort-name{
-  font-size: 3em;
-  text-transform: uppercase;
+  font-size: 1.5em;
   text-decoration-style: double;
-  margin-bottom:25px; 
+  margin-bottom: 0;
 }
 
 .sort-page-container .sort-definition {
   width: 95%;
-  background-color: transparent;
-  color: rgb(255,255,255);
+  background-color: rgb(194, 194, 194);
+  color: rgb(107, 18, 119);
+  white-space: pre-wrap;
+  font-size: 0.75em;
+  display: block;
+  max-height: 150px;
+  overflow-y: scroll;
 }
 
 .sort-controls {

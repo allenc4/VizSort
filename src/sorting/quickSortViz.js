@@ -9,18 +9,18 @@ class QuickSortViz extends SortViz {
 
     printAlgorithm() {
         return ( 
-            "quicksort(low, high) {" +
-            "   if (low < high) {" +
-            "       // pi is partitioning index, arr[pi] is now at the right place" +
-            "       const pi = partition(low, high);" +
-            "       array[pi].sorted = true;" +
-            "       " +
-            "       // Sort before pi" +
-            "       this.quicksort(low, pi-1);" +
-            "       // Sort after pi" +
-            "       this.quicksort(pi+1, high);" +
-            "   }" +
-            "}");
+            "quicksort(low, high) {\n" +
+            "   if (low < high) {\n" +
+            "       // pi is partitioning index, arr[pi] is now at the right place\n" +
+            "       const pi = partition(low, high);\n" +
+            "       array[pi].sorted = true;\n" +
+            "       \n" +
+            "       // Sort before pi\n" +
+            "       this.quicksort(low, pi-1);\n" +
+            "       // Sort after pi\n" +
+            "       this.quicksort(pi+1, high);\n" +
+            "   }\n" +
+            "}\n");
     }
 
     /**

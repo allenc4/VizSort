@@ -11,20 +11,20 @@ class BubbleSortViz extends SortViz {
 
     printAlgorithm() {
         return ( 
-            "// Loop through all elements. Once mainn loop decrements, the largest value" +
-            "// will be placed at the end each iteration" +
-            "for (eIndex = array.length - 1; eIndex >= 0; eIndex--) {" +
-            "   for (i = 1; i < eIndex; i++) {" +
-            "       // Get current and previous element" +
-            "       let cur = array[i];" +
-            "       let prev = array[i-1];" +
-            "       " +
-            "       // Compare these two and swap if prev is > cur" +
-            "       if (prev > cur) {" + 
-            "           array[i] = prev;" + 
-            "           array[i-1] = cur;" +
-            "       }" +
-            "   }" +
+            "// Loop through all elements. Once mainn loop decrements, the largest value\n" +
+            "// will be placed at the end each iteration\n" +
+            "for (eIndex = array.length - 1; eIndex >= 0; eIndex--) {\n" +
+            "   for (i = 1; i < eIndex; i++) {\n" +
+            "       // Get current and previous element\n" +
+            "       let cur = array[i];\n" +
+            "       let prev = array[i-1];\n" +
+            "       \n" +
+            "       // Compare these two and swap if prev is > cur\n" +
+            "       if (prev > cur) {\n" + 
+            "           array[i] = prev;\n" + 
+            "           array[i-1] = cur;\n" +
+            "       }\n" +
+            "   }\n" +
             "}");
     }
 

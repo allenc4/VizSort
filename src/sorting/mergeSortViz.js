@@ -9,17 +9,17 @@ class MergeSortViz extends SortViz {
 
     printAlgorithm() {
         return ( 
-            "mergesort(left, right) {" +
-            "   // If right > left, find middle point to divide array into two halves" +
-            "   if (right > left) {" +
-            "       let middle = Math.floor((left + right) / 2);" +
-            "       // Call mergesort for the first half" +
-            "       mergesort(left, middle);" +
-            "       // Call mergesort for second half" +
-            "       mergesort(middle+1, right);" +
-            "       // Merge the two halves" +
-            "       merge(left, middle, right);" +
-            "   }" +
+            "mergesort(left, right) {\n" +
+            "   // If right > left, find middle point to divide array into two halves\n" +
+            "   if (right > left) {\n" +
+            "       let middle = Math.floor((left + right) / 2);\n" +
+            "       // Call mergesort for the first half\n" +
+            "       mergesort(left, middle);\n" +
+            "       // Call mergesort for second half\n" +
+            "       mergesort(middle+1, right);\n" +
+            "       // Merge the two halves\n" +
+            "       merge(left, middle, right);\n" +
+            "   }\n" +
             "}"); 
     }
 

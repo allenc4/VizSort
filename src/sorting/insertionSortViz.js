@@ -13,26 +13,26 @@ class InsertionSortViz extends SortViz {
 
     printAlgorithm() {
         return ( 
-            "for (let i = 1; i < arr.length; i++) {" +
-            "   // Get the current element at position i" +
-            "   var cur = arr[i];" +
-            "   " +
-            "   if (cur < arr[i-1]) {" +
-            "       // Traverse backwards until current element is "+
-            "       // sorted from position 0 to i" +
-            "       for (let k=i,a=k-1; a >= 0; a--,k--) {" +
-            "           if (cur < arr[a]) {" +
-            "               // swap the elements at index i and a" +
-            "               arr[k] = arr[a];" +
-            "               arr[a] = cur;" +
-            "           } else {" +
-            "               // element cur is greater than arr[a] which means it is" +
-            "               // greater than anything before index a" +
-            "               break;" +
-            "               " +
-            "           }" +
-            "       }" +
-            "}"); 
+            "for (let i = 1; i < arr.length; i++) {\n" +
+            "   // Get the current element at position i\n" +
+            "   var cur = arr[i];\n" +
+            "   \n" +
+            "   if (cur < arr[i-1]) {\n" +
+            "       // Traverse backwards until current element is \n"+
+            "       // sorted from position 0 to i\n" +
+            "       for (let k=i,a=k-1; a >= 0; a--,k--) {\n" +
+            "           if (cur < arr[a]) {\n" +
+            "               // swap the elements at index i and a\n" +
+            "               arr[k] = arr[a];\n" +
+            "               arr[a] = cur;v" +
+            "           } else {\n" +
+            "               // element cur is greater than arr[a] which means it is\n" +
+            "               // greater than anything before index a\n" +
+            "               break;\n" +
+            "               \n" +
+            "           }\n" +
+            "       }\n" +
+            "}\n"); 
     }
 
     /**

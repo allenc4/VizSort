@@ -9,6 +9,7 @@ import InsertionSortViz from '../sorting/insertionSortViz';
 import MergeSortViz from '../sorting/mergeSortViz';
 import QuickSortViz from '../sorting/quickSortViz';
 
+
 /**
  * Component for the sorting algorithms page. Displays the two page panels;
  * left side is the algorithm definition and right side is the sorting visual
@@ -247,8 +248,10 @@ class SortPage extends React.Component {
     render() {
 
         let sortImpl = this.state.sortImpl;
-        const algoDef = sortImpl.printAlgorithm();
-        console.log(algoDef);
+        let algoDef = null;
+        if (sortImpl) {
+            algoDef = sortImpl.printAlgorithm();
+        }
         
         return (
             <Container fluid={true}>
@@ -269,15 +272,15 @@ class SortPage extends React.Component {
                 <Row className="sort-page-container">
 
                 {/* Print out the left side for the algo definition */}
-                <Col md={3}>
-                    <label className="sort-name">{this.state.sortType} Sort</label><br/>
-                    <div type="text" className="sort-definition">
-                        {/* {algoDef} */}
-                    </div>
+                <Col md={4}>
+                    <label className="sort-name">{SortConstants.ALGORITHM_NAMES[this.state.sortType]}</label><br/>
+                    <code type="text" className="sort-definition">
+                        {algoDef}
+                    </code>
                 </Col>
 
                 {/* Print out the right side for the algorithm visual */}
-                <Col md={9}>
+                <Col md={8}>
                     <SortContainer elements={this.state.elements} />
                 </Col>
 
